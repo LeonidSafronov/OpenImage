@@ -25,20 +25,30 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rdw-In-c0k">
-                                <rect key="frame" x="173.5" y="484" width="67" height="31"/>
+                                <rect key="frame" x="146" y="484" width="122.5" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="1L0-Uk-4uy"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="67" id="vTZ-AP-8lv"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Choose picture"/>
                                 <connections>
                                     <action selector="chooseImageButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="MBB-EI-AH4"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sdt-5o-m3w">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Flw-c6-27u">
+                                <rect key="frame" x="171.5" y="539" width="71.5" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="LJR-I9-C1S"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Display"/>
+                                <connections>
+                                    <action selector="displayButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="d0V-xd-vkh"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Sdt-5o-m3w">
                                 <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -47,6 +57,12 @@
                             <constraint firstItem="xAC-9W-KJR" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="462-Gi-NE7"/>
                             <constraint firstItem="xAC-9W-KJR" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Fpw-BL-pRh"/>
                             <constraint firstItem="rdw-In-c0k" firstAttribute="top" secondItem="xAC-9W-KJR" secondAttribute="bottom" constant="21" id="MOQ-03-3qQ"/>
+                            <constraint firstItem="Sdt-5o-m3w" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="PWN-Vg-FVM"/>
+                            <constraint firstItem="Sdt-5o-m3w" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Rje-V7-8q6"/>
+                            <constraint firstItem="Flw-c6-27u" firstAttribute="centerX" secondItem="Sdt-5o-m3w" secondAttribute="centerX" id="dUG-Q3-pJc"/>
+                            <constraint firstItem="Sdt-5o-m3w" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="imX-SL-fcg"/>
+                            <constraint firstItem="Flw-c6-27u" firstAttribute="top" secondItem="rdw-In-c0k" secondAttribute="bottom" constant="24" id="j6I-E7-Oaj"/>
+                            <constraint firstItem="Flw-c6-27u" firstAttribute="centerX" secondItem="rdw-In-c0k" secondAttribute="centerX" id="qgq-W7-cXb"/>
                             <constraint firstItem="rdw-In-c0k" firstAttribute="centerX" secondItem="xAC-9W-KJR" secondAttribute="centerX" id="xoY-qF-mfj"/>
                         </constraints>
                     </view>

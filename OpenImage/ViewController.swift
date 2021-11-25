@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIDocumentInteractionControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,6 +15,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let tapImage = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
                         imageView.addGestureRecognizer(tapImage)
                         imageView.isUserInteractionEnabled = true
+        let tapLoadedImage = UITapGestureRecognizer(target: self, action: #selector(self.loadedImageTapped))
+        loadedImageView.addGestureRecognizer(tapLoadedImage)
+        loadedImageView.isUserInteractionEnabled = true
     }
     
     @objc func imageTapped(sender: UITapGestureRecognizer) {
@@ -28,22 +31,35 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             loadedImageView.isHidden = false
         }
     }
+        
+    @objc func loadedImageTapped(sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            loadedImageView.isHidden = true
+        }
+    }
     
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet weak var loadedImageView: UIImageView!
     @IBAction func chooseImageButton(_ sender: Any) {
         setImage()
     }
+    @IBAction func displayButtonTapped(_ sender: Any) {
+        guard let image = imageView.image, let id = id else {
+            return
+        }
+        saveImageToStorage(imageName: id, image: image)
+        displayImageFromStorage(filePath: id)
+    }
     
-    private var id: String?
+    private var id: URL?
     private var loadedImage: UIImage?
     
-    func saveImageToStorage(imageName: String, image: UIImage) {
+    func saveImageToStorage(imageName: URL, image: UIImage) {
 
         guard let documentsDirectory = FileManager.default.urls(for: .autosavedInformationDirectory, in: .userDomainMask).first else { return }
 
         let fileName = imageName
-        let fileURL = documentsDirectory.appendingPathComponent(fileName)
+        let fileURL = fileName
         guard let data = image.jpegData(compressionQuality: 1) else { return }
 
         //Checks if file exists, removes it if so.
@@ -64,7 +80,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
     }
 
-    func loadImageFromStorage(fileName: String) -> UIImage? {
+    func loadImageFromStorage(fileName: URL) -> UIImage? {
 
       let documentDirectory = FileManager.SearchPathDirectory.picturesDirectory
 
@@ -72,7 +88,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let paths = NSSearchPathForDirectoriesInDomains(documentDirectory, userDomainMask, true)
 
         if let dirPath = paths.first {
-            let imageUrl = URL(fileURLWithPath: dirPath).appendingPathComponent(fileName)
+            let imageUrl = fileName
             let image = UIImage(contentsOfFile: imageUrl.path)
             return image
         }
@@ -95,12 +111,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         guard let imageName = imageName else {
             return
         }
-        id = "/\(imageName.lastPathComponent)"
+        id = imageName
         dismiss(animated: true, completion: nil)
     }
     
-    func presentImageFromStorage(image: UIImage) {
-        
+    func documentInteractionControllerViewControllerForPreview(_ controller: UIDocumentInteractionController) -> UIViewController {
+        return self
+    }
+    
+    func displayImageFromStorage(filePath: URL) {
+        let urlFile = filePath
+        var documentInteractionController: UIDocumentInteractionController
+        documentInteractionController = UIDocumentInteractionController.init(url: urlFile)
+        documentInteractionController.delegate = self
+        documentInteractionController.presentPreview(animated: true)
     }
 }
 
